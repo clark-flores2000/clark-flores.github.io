@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OLFU QC Campus Map - View Only</title>
+  <style>
+    /* Styles: Same as original, without 'Icons' section */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: black;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .sidebar {
+      background-color: white;
+      padding: 40px 20px;
+      width: 250px;
+      height: 100vh;
+      border-right: 1px solid #ccc;
+      color: black;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar span {
+      font-size: 20px;
+    }
+
+    .sidebar b {
+      display: block;
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    .sidebar p {
+      margin-top: 10px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .map-container {
+      flex-grow: 1;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-color: #eee;
+    }
+
+    .map-viewport {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .map-inner {
+      cursor: grab;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .map-inner img {
+      max-width: 2250px;
+      height: auto;
+      display: block;
+      image-rendering: auto;
+    }
+
+    .map-inner.grabbing {
+      cursor: grabbing;
+    }
+
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      font-size: 50px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .popup {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      z-index: 999;
+      width: 200px;
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .popup img {
+      width: 100%;
+      height: auto;
+    }
+
+    .map-pin.highlighted {
+      transform: translate(-50%, -100%) scale(1.5);
+      box-shadow: 0 0 10px 5px yellow;
+      z-index: 1000;
+    }
+
+    .sidebar span[onclick] {
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .sidebar span[onclick]:hover {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="sidebar" style="background-color: #006838; color: white;">
+      <h2 style="color: white;">OLFU QC<br><span style="font-size: 18px; color: #C8E6C9;">CAMPUS MAP</span></h2>
+
+      <b style="color: #FFD700;">Buildings</b>
+      <p>
+        <span onclick="highlightPin('CAS')">🏫 CAS</span><br>
+        <span onclick="highlightPin('HS')">🏫 HS</span><br>
+        <span onclick="highlightPin('SJB')">🏫 SJB</span><br>
+        <span onclick="highlightPin('BSED')">🏫 BSED</span><br>
+        <span onclick="highlightPin('Athletic Center')">🏟️ Athletic Center</span><br>
+        <span onclick="highlightPin('Nursing')">🏥 NURSING</span>
+      </p>
+
+      <b style="color: #FFD700;">Offices</b>
+      <p>
+        <span onclick="highlightPin('Admission')">📝 Admission</span><br>
+        <span onclick="highlightPin('Curriculum')">📝 Curriculum</span><br>
+        <span onclick="highlightPin('Registrar')">📂 Registrar</span><br>
+      </p>
+
+      <b style="color: #FFD700;">Department</b>
+      <p>
+        <span onclick="highlightPin('Engineering')">🛠️ Engineering</span><br>
+      </p>
+    </div>
+
+    <div class="map-container">
+      <div class="map-viewport">
+        <div class="map-inner" id="mapInner">
+          <img src="mapsu-picaai.png" alt="Campus Map">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    <img id="popupImg" src="" style="display:none;">
+    <p id="pinName"></p>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    const pinName = document.getElementById('pinName');
+    const dropZone = document.getElementById('mapInner');
+
+    const pinData = {
+      "CAS": { image: "camping.jpg", name: "CAS Building", emoji: "🏫" },
+      "HS": { image: "lamion.jpg", name: "HS Building", emoji: "🏫" },
+      "Nursing": { image: "1896.jpg", name: "Nursing Building", emoji: "🏥" },
+      "Admission": { image: "bulaga.jpg", name: "Admission Office", emoji: "📝" },
+      "Curriculum": { image: "bulaga.jpg", name: "Curriculum Office", emoji: "📝" },
+      "Registrar": { image: "taviel.jpg", name: "Registrar Office", emoji: "📂" },
+      "Athletic Center": { image: "farm.png", name: "Athletic Center", emoji: "🏟️" },
+      "SJB": { image: "kalo.png", name: "SJB Building", emoji: "🏫" },
+      "BSED": { image: "bd.jpg", name: "BSED Building", emoji: "🏫" },
+      "Engineering": { image: "Blumentritt.jpg", name: "Engineering Department", emoji: "🛠️" }
+    };
+
+    function createPin(x, y, id, type) {
+      const pin = document.createElement('div');
+      pin.classList.add('map-pin');
+
+      const data = pinData[type] || { image: "", name: type, emoji: "" };
+      pin.innerHTML = data.emoji;
+      pin.style.left = `${x}px`;
+      pin.style.top = `${y}px`;
+      pin.id = id;
+      pin.dataset.img = data.image;
+      pin.dataset.name = data.name;
+
+      dropZone.appendChild(pin);
+      attachPopupEvents(pin);
+      return pin;
+    }
+
+    function attachPopupEvents(pin) {
+      pin.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const pinRect = pin.getBoundingClientRect();
+        popup.style.left = pinRect.left + 'px';
+        popup.style.top = pinRect.top + 'px';
+        popup.style.display = 'flex';
+        popupImg.src = pin.dataset.img;
+        popupImg.style.display = 'block';
+        pinName.textContent = pin.dataset.name;
+      });
+    }
+
+    document.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    popup.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const pins = JSON.parse(localStorage.getItem('pins') || '[]');
+      pins.forEach(({ x, y, id, type }) => {
+        createPin(x, y, id, type);
+      });
+    });
+
+    const mapInner = document.getElementById('mapInner');
+    let scale = 0.5;
+    let pos = { x: 0, y: 0 };
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+
+    function updateTransform() {
+      mapInner.style.transform = `translate(-50%, -50%) translate(${pos.x}px, ${pos.y}px) scale(${scale})`;
+    }
+
+    document.querySelector('.map-viewport').addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomAmount = 0.1;
+      const direction = e.deltaY > 0 ? -1 : 1;
+      scale = Math.min(Math.max(scale + direction * zoomAmount, 0.5), 3);
+      updateTransform();
+    });
+
+    mapInner.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      dragStart.x = e.clientX - pos.x;
+      dragStart.y = e.clientY - pos.y;
+      mapInner.classList.add('grabbing');
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      mapInner.classList.remove('grabbing');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        pos.x = e.clientX - dragStart.x;
+        pos.y = e.clientY - dragStart.y;
+        updateTransform();
+      }
+    });
+
+    function highlightPin(type) {
+      document.querySelectorAll('.map-pin').forEach(pin => {
+        pin.classList.remove('highlighted');
+      });
+
+      const pin = Array.from(document.querySelectorAll('.map-pin')).find(p => p.dataset.name?.toLowerCase().includes(type.toLowerCase()));
+      if (pin) {
+        pin.classList.add('highlighted');
+        setTimeout(() => pin.classList.remove('highlighted'), 2000);
+      } else {
+        alert(type + ' is not placed on the map yet.');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+  const pins = JSON.parse(localStorage.getItem('pins') || '[]');
+  pins.forEach(({ x, y, id, type }) => {
+    createPin(x, y, id, type);
+  });
+});
+  </script>
+
+</body>
+</html>

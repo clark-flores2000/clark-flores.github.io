@@ -52,7 +52,8 @@ function highlightPin(type) {
   document.querySelectorAll('.map-pin').forEach(pin => {
     pin.classList.remove('highlighted');
   });
-  const pin = Array.from(document.querySelectorAll('.map-pin')).find(p => p.dataset.name?.toLowerCase().includes(type.toLowerCase()));
+  const pin = Array.from(document.querySelectorAll('.map-pin'))
+    .find(p => p.dataset.name?.toLowerCase().includes(type.toLowerCase()));
   if (pin) {
     pin.classList.add('highlighted');
     setTimeout(() => pin.classList.remove('highlighted'), 2000);

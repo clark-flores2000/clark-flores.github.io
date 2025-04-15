@@ -125,4 +125,32 @@ document.querySelector('.map-viewport').addEventListener('touchmove', (e) => {
 document.querySelector('.map-viewport').addEventListener('touchend', () => {
   lastDistance = 0;
 });
+let touchStart = { x: 0, y: 0 };
+
+document.querySelector('.map-viewport').addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    const touch = e.touches[0];
+    isDragging = true;
+    dragStart.x = touch.clientX - pos.x;
+    dragStart.y = touch.clientY - pos.y;
+    mapInner.classList.add('grabbing');
+  }
+}, { passive: false });
+
+document.querySelector('.map-viewport').addEventListener('touchmove', (e) => {
+  if (e.touches.length === 1 && isDragging) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    pos.x = touch.clientX - dragStart.x;
+    pos.y = touch.clientY - dragStart.y;
+    updateTransform();
+  }
+}, { passive: false });
+
+document.querySelector('.map-viewport').addEventListener('touchend', (e) => {
+  if (e.touches.length === 0) {
+    isDragging = false;
+    mapInner.classList.remove('grabbing');
+  }
+});
 

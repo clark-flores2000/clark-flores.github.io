@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <title>OLFU QC MAP</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="wrapper">
   <div class="sidebar">
-    <h2>OLFU QC<br><span style="font-size: 18px; color: #C8E6C9;">CAMPUS MAP</span></h2>
+    <h2>ADMIN<br>OLFU QC<br><span>CAMPUS MAP</span></h2>
     <b>Buildings</b>
     <p>
       <span onclick="highlightPin('CAS')">🏫 CAS</span><br>
@@ -46,7 +47,8 @@
         <div class="map-pin" style="left: 1070px; top: 650px; color: orange;" data-name="Admission" data-images="taviel.jpg,Blumentritt.jpg">📝</div>
         <div class="map-pin" style="left: 1520px; top: 650px; color: orange;" data-name="Curriculum" data-images="Blumentritt.jpg,bulaga.jpg">📝</div>
         <div class="map-pin" style="left: 2200px; top: 450px; color: purple;" data-name="Registrar" data-images="camping.jpg,lamion.jpg">📂</div>
-        <div class="map-pin" style="left: 1500px; top: 450px; color: darkcyan;" data-name="Engineering" data-images="kalo.png,farm.png">🛠️</div>
+        <div class="map-pin" style="left: 600px; top: 450px; color: darkcyan;" data-name="Engineering" data-images="kalo.png,farm.png">🛠️</div>
+        <!-- add other pins here... -->
       </div>
     </div>
   </div>
@@ -55,7 +57,7 @@
 <div class="popup" id="popup">
   <p id="pinName"></p>
   <img id="pinImage" src="" alt="Pin Image">
-  <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+  <div class="buttons">
     <button onclick="prevImage()">Prev</button>
     <button onclick="nextImage()">Next</button>
   </div>

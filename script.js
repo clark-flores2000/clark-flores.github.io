@@ -153,4 +153,18 @@ document.querySelector('.map-viewport').addEventListener('touchend', (e) => {
     mapInner.classList.remove('grabbing');
   }
 });
+function checkOrientation() {
+  const warning = document.getElementById('orientationWarning');
+  if (window.innerWidth < window.innerHeight) {
+    warning.style.display = 'flex';
+  } else {
+    warning.style.display = 'none';
+  }
+}
+
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
+// Run on page load
+checkOrientation();
 

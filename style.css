@@ -171,4 +171,16 @@
       height: calc(100vh - 300px);
     }
   }
-  
+  /* 🔍 Make map fill remaining space on mobile */
+@media (max-width: 768px) {
+  .map-container {
+    flex-grow: 1;
+    height: auto;
+  }
+
+  .map-viewport {
+    height: 100%;
+    width: 100%;
+  }
+}
+

@@ -99,3 +99,30 @@ document.addEventListener('mousemove', (e) => {
     updateTransform();
   }
 });
+let lastDistance = 0;
+
+document.querySelector('.map-viewport').addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    const touch1 = e.touches[0];
+    const touch2 = e.touches[1];
+
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (lastDistance !== 0) {
+      const delta = distance - lastDistance;
+      const zoomAmount = delta * 0.005; // adjust speed here
+      scale = Math.min(Math.max(scale + zoomAmount, 0.5), 3);
+      updateTransform();
+    }
+    lastDistance = distance;
+  }
+}, { passive: false });
+
+document.querySelector('.map-viewport').addEventListener('touchend', () => {
+  lastDistance = 0;
+});
+

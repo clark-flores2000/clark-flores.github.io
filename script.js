@@ -115,7 +115,7 @@ document.querySelector('.map-viewport').addEventListener('touchmove', (e) => {
     if (lastDistance !== 0) {
       const delta = distance - lastDistance;
       const zoomAmount = delta * 0.005; // adjust speed here
-      scale = Math.min(Math.max(scale + zoomAmount, 0.5), 3);
+      scale = Math.min(Math.max(scale + zoomAmount, 0.2), 3);
       updateTransform();
     }
     lastDistance = distance;

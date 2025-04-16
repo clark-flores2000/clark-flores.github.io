@@ -143,7 +143,7 @@
   }
   
   /* 📱 Mobile Layout */
-  @media (max-width: 768px) {
+  /*@media (max-width: 768px) {
     .wrapper {
       flex-direction: column;
     }
@@ -172,17 +172,17 @@
     }
   }
   /* 🔍 Make map fill remaining space on mobile */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .map-container {
     flex-grow: 1;
     height: auto;
   }
 
-  .map-viewport {
+ /* .map-viewport {
     height: 100%;
     width: 100%;
   }
-}
+}*/
 .orientation-warning {
   position: fixed;
   top: 0;

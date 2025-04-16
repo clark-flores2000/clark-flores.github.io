@@ -76,7 +76,7 @@ document.querySelector('.map-viewport').addEventListener('wheel', (e) => {
   e.preventDefault();
   const zoomAmount = 0.1;
   const direction = e.deltaY > 0 ? -1 : 1;
-  scale = Math.min(Math.max(scale + direction * zoomAmount, 0.5), 3);
+  scale = Math.min(Math.max(scale + direction * zoomAmount, 0.1), 3);
   updateTransform();
 });
 

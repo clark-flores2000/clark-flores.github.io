@@ -16,18 +16,18 @@
     <h2><br>OLFU QC<br><span>CAMPUS MAP</span></h2>
     <b>Buildings</b>
     <p>
-      <span onclick="highlightPin('CAS')">🏫 CAS</span><br>
-      <span onclick="highlightPin('HS')">🏫 HS</span><br>
-      <span onclick="highlightPin('SJB')">🏫 SJB</span><br>
+      <span onclick="highlightPin('CAS')">🏫 CAS- College of Arts and Sciences</span><br>
+      <span onclick="highlightPin('VSB')">🏫 VSB- Vicente Santos Building</span><br>
+      <span onclick="highlightPin('SJB')">🏫 SJB- San Jose Bulding</span><br>
       <span onclick="highlightPin('BSED')">🏫 BSED</span><br>
-      <span onclick="highlightPin('Athletic Center')">🏟️ Athletic Center</span><br>
-      <span onclick="highlightPin('Nursing')">🏥 NURSING</span>
+      <span onclick="highlightPin('Athletic Center')">🏟️ AC- Athletic Center</span><br>
+      <span onclick="highlightPin('SAB')">🏥 St. Agatha Building</span>
     </p>
 
     <b>Offices</b>
     <p>
       <span onclick="highlightPin('Admission')">📝 Admission</span><br>
-      <span onclick="highlightPin('Curriculum')">📝 Curriculum</span><br>
+      <span onclick="highlightPin('NSTP/ OCCA/SOCI')">📝 NSTP/ OCCA/SOCI</span><br>
       <span onclick="highlightPin('Registrar')">📂 Registrar</span>
     </p>
 
@@ -35,23 +35,32 @@
     <p>
       <span onclick="highlightPin('Engineering')">🛠️ Engineering</span>
     </p>
+
+    <b>Others</b>
+    <p>
+      <span onclick="highlightPin('Park')">
+        <img src="park-removebg-preview.png" alt="Parking OLFU" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 5px;">
+        Parking OLFU Park and Chapel
+      </span>
+    </p>
   </div>
 
   <div class="map-container">
     <div class="map-viewport">
       <div class="map-inner" id="mapInner">
-        <img src="mapsu-picaai.png" alt="Campus Map">
+        <img src="mapnew (1).png" alt="Campus Map">
         <!-- Map Pins -->
-        <div class="map-pin" style="left: 1750px; top: 400px; color: red;" data-name="CAS" data-images="Cas.jpg,1896.jpg">🏫</div>
-        <div class="map-pin" style="left: 1640px; top: 160px; color: blue;" data-name="HS" data-images="HS.jpg,farm.png">🏫</div>
-        <div class="map-pin" style="left: 2200px; top: 800px; color: maroon;" data-name="SJB" data-images="SJB.png,lamion.jpg">🏫</div>
-        <div class="map-pin" style="left: 2740px; top: 1000px; color: brown;" data-name="BSED" data-images="bd.jpg,animalinteract.png">🏫</div>
-        <div class="map-pin" style="left: 1410px; top: 1100px; color: teal;" data-name="Athletic Center" data-images="AC.jpg,kalo.png">🏟️</div>
-        <div class="map-pin" style="left: 1500px; top: 1500px; color: green;" data-name="Nursing" data-images="Nursing.png,camping.jpg">🏥</div>
-        <div class="map-pin" style="left: 1070px; top: 650px; color: orange;" data-name="Admission" data-images="taviel.jpg,Blumentritt.jpg">📝</div>
-        <div class="map-pin" style="left: 1520px; top: 650px; color: orange;" data-name="Curriculum" data-images="Blumentritt.jpg,bulaga.jpg">📝</div>
-        <div class="map-pin" style="left: 2200px; top: 450px; color: purple;" data-name="Registrar" data-images="camping.jpg,lamion.jpg">📂</div>
-        <div class="map-pin" style="left: 1500px; top: 450px; color: darkcyan;" data-name="Engineering" data-images="kalo.png,farm.png">🛠️</div>
+        <div class="map-pin" style="left: 1550px; top: 250px;" data-name="CAS" data-images="Cas.jpg,1896.jpg">🏫</div>
+        <div class="map-pin" style="left: 1400px; top: 80px; " data-name="VSB" data-images="HS.jpg,farm.png">🏫</div>
+        <div class="map-pin" style="left: 1900px; top: 700px; " data-name="SJB" data-images="SJB.png,lamion.jpg">🏫</div>
+        <div class="map-pin" style="left: 2340px; top: 790px; " data-name="BSED" data-images="bd.jpg,animalinteract.png">🏫</div>
+        <div class="map-pin" style="left: 1210px; top: 900px; " data-name="Athletic Center" data-images="AC.jpg,kalo.png">🏟️</div>
+        <div class="map-pin" style="left: 1290px; top: 1290px; " data-name="SAB" data-images="Nursing.png,camping.jpg">🏥</div>
+        <div class="map-pin" style="left: 910px; top: 550px; " data-name="Admission" data-images="taviel.jpg,Blumentritt.jpg">📝</div>
+        <div class="map-pin" style="left: 1260px; top: 530px; " data-name="NSTP/ OCCA/SOCI" data-images="Blumentritt.jpg,bulaga.jpg">📝</div>
+        <div class="map-pin" style="left: 1840px; top: 340px; " data-name="Registrar" data-images="camping.jpg,lamion.jpg">📂</div>
+        <div class="map-pin" style="left: 1200px; top: 370px; " data-name="Engineering" data-images="kalo.png,farm.png">🛠️</div>
+        <div class="map-pin" style="left: 950px; top: 750px; " data-name="Park" data-images="kalo.png,farm.png"><img src="park-removebg-preview.png" alt="Parking OLFU" style="width: 100px; height: 100px; vertical-align: middle; margin-right: 5px;"></div>
         <!-- add other pins here... -->
       </div>
     </div>

@@ -212,4 +212,12 @@ height: auto;
 display: block;
 margin: 0 auto 10px;
 }
+#walker {
+  position: absolute;
+  top: 200px;
+  left: 600px;
+  width: 100px;
+  height: auto;
+  transition: top 0.00s linear, left 0.00s linear;
+}
 

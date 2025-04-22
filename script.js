@@ -167,4 +167,39 @@ window.addEventListener('orientationchange', checkOrientation);
 
 // Run on page load
 checkOrientation();
+function startWalking() {
+  const walker = document.getElementById('walker');
+  
+  let currentTop = 200;
+  let currentLeft = 600;
+
+  const maxTop = 1500;
+  const maxLeft = 1500;
+
+  const speedTop = 2.2;  // pixels pababa
+  const speedLeft = 5.0; // pixels pakakanan
+
+  function move() {
+    if (currentTop < maxTop && currentLeft < maxLeft) {
+      currentTop += speedTop;
+      currentLeft += speedLeft;
+    } else {
+      // Reset to starting position
+      currentTop = 200;
+      currentLeft = 600;
+    }
+
+    walker.style.top = currentTop + 'px';
+    walker.style.left = currentLeft + 'px';
+
+    requestAnimationFrame(move);
+  }
+
+  move();
+}
+
+startWalking();
+
+
+
 
